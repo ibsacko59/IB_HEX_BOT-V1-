@@ -3,18 +3,19 @@
 // ║         Développé par Ibrahima Sory Sacko                ║
 // ╚══════════════════════════════════════════════════════════╝
 
+  const baileys = require('@whiskeysockets/baileys')
+
+const makeWASocket = baileys.default
 const {
-  default: makeWASocket,
   useMultiFileAuthState,
   DisconnectReason,
   fetchLatestBaileysVersion,
-  makeInMemoryStore,
   jidDecode,
   proto,
   getContentType,
   generateWAMessageFromContent,
   prepareWAMessageMedia,
-} = require('@whiskeysockets/baileys')
+} 
 
 const pino    = require('pino')
 const { Boom } = require('@hapi/boom')
