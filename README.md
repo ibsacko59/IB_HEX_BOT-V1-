@@ -19,6 +19,7 @@
 
 
 
+
 ## 🛡️ Politique
 
 - ✅ **Toutes les commandes sont publiques** — aucune restriction
@@ -36,6 +37,7 @@
 **🥷 Ibrahima Sory Sacko**
 
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-+224621963059-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/224621963059)
+**Ibrahima Sory Sacko**
 
 *Ib-Sacko™ — All rights reserved*
 
