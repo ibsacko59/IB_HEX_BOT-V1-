@@ -42,13 +42,24 @@
 
 <div align="center">
 
+## 🌍 Rejoins la Communauté Officielle CENTRAL HEX 🚀
 
-### 🌍 Rejoins la Communauté OVL
+Bienvenue dans l’univers CENTRAL HEX 💎  
+Communauté digitale | Ressources | Support | Mises à jour exclusives  
 
-[![WhatsApp Support](https://img.shields.io/badge/Support%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/BP1oOMh0QvR7H3vvO9bRYK)
-[![Telegram Channel](https://img.shields.io/badge/Canal%20Telegram-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/ovlmd_tlg)
-[![WhatsApp Channel](https://img.shields.io/badge/Channel%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VayTmvxHltYGCm0J7P0A)
+---
 
+[![📢 Chaîne WhatsApp](https://img.shields.io/badge/Chaîne%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbC8YkY7oQhiOiiSpy1z)
+
+[![💬 Groupe WhatsApp](https://img.shields.io/badge/Groupe%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/Kipqc4A7lt4E7GCd112HvG?mode=gi_t)
+
+[![🚀 Canal Telegram](https://img.shields.io/badge/Canal%20Telegram-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/ibhexgate)
+
+---
+
+⭐ Reste connecté • Reçois les nouveautés • Accède aux exclusivités  
+
+💎 CENTRAL HEX – Build. Share. Elevate.
 
 *Ib-Sacko™ — All rights reserved*
 
