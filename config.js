@@ -22,7 +22,7 @@ module.exports = {
 
   // ── APIs publiques ────────────────────────
   GEMINI_KEY    : process.env.GEMINI_KEY    || '',
-  OPENAI_KEY    : process.env.OPENAI_KEY    || '',
+  OPENAI_KEY    : process.env.OPENAI_KEY    || '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',
 
   // ── Dossier de session ───────────────────
   SESSION_DIR   : './session',
