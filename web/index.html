@@ -1,1 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IB-HEX-BOT — QR Code</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Particules d'arrière-plan -->
+  <div class="particles" id="particles"></div>
 
+  <!-- Grille cyberpunk -->
+  <div class="grid-bg"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="ninja-icon">🥷</div>
+      <h1 class="title">IB-HEX-BOT</h1>
+      <p class="subtitle">Connexion WhatsApp</p>
+      <div class="version-badge">v1.0 — Ib-Sacko™</div>
+    </div>
+
+    <!-- Card principale -->
+    <div class="card" id="mainCard">
+      <!-- État de connexion -->
+      <div class="status-bar" id="statusBar">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">⏳ Connexion en cours…</span>
+      </div>
+
+      <!-- Zone QR Code -->
+      <div class="qr-section" id="qrSection">
+        <div class="qr-frame">
+          <div class="qr-corner tl"></div>
+          <div class="qr-corner tr"></div>
+          <div class="qr-corner bl"></div>
+          <div class="qr-corner br"></div>
+
+          <div class="qr-loading" id="qrLoading">
+            <div class="loader-ring"></div>
+            <p>Génération du QR Code…</p>
+          </div>
+
+          <img id="qrImage" src="" alt="QR Code" style="display:none;"/>
+        </div>
+
+        <div class="scan-instruction" id="scanInstruction" style="display:none;">
+          <div class="phone-icon">📱</div>
+          <p>Ouvrez <strong>WhatsApp</strong> sur votre téléphone</p>
+          <p>Allez dans <strong>Paramètres → Appareils liés → Lier un appareil</strong></p>
+          <p>Scannez ce QR Code</p>
+        </div>
+      </div>
+
+      <!-- Zone connecté -->
+      <div class="connected-section" id="connectedSection" style="display:none;">
+        <div class="success-animation">
+          <div class="success-circle">
+            <span class="checkmark">✓</span>
+          </div>
+        </div>
+        <h2 class="connected-title">Bot Connecté !</h2>
+        <p class="connected-sub">IB-HEX-BOT est en ligne 🥷</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-icon">🏷️</span>
+            <span>Préfixe : <strong>Ib</strong></span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">👤</span>
+            <span>Owner : <strong>Ibrahima Sory Sacko</strong></span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">⚡</span>
+            <span>Statut : <strong>Actif</strong></span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🤖</span>
+            <span>Mode : <strong>Public</strong></span>
+          </div>
+        </div>
+        <div class="commands-preview">
+          <p>Tapez <code>Ibmenu</code> sur WhatsApp pour commencer !</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commandes rapides -->
+    <div class="quick-commands">
+      <div class="qc-title">⚡ Commandes rapides</div>
+      <div class="qc-grid">
+        <div class="qc-item"><code>Ibmenu</code><span>Menu principal</span></div>
+        <div class="qc-item"><code>Ibping</code><span>Vitesse bot</span></div>
+        <div class="qc-item"><code>Ibalive</code><span>État du bot</span></div>
+        <div class="qc-item"><code>Ibai ...</code><span>Intelligence IA</span></div>
+        <div class="qc-item"><code>Ibsticker</code><span>Créer sticker</span></div>
+        <div class="qc-item"><code>Ibtiktok</code><span>DL TikTok</span></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>🥷 <strong>IB-HEX-BOT</strong> — Développé par <strong>Ibrahima Sory Sacko</strong></p>
+      <p>Basé sur <strong>@whiskeysockets/baileys</strong> • Hébergé sur <strong>Render.com</strong></p>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io()
+
+    const statusDot     = document.getElementById('statusDot')
+    const statusText    = document.getElementById('statusText')
+    const qrLoading     = document.getElementById('qrLoading')
+    const qrImage       = document.getElementById('qrImage')
+    const scanInstr     = document.getElementById('scanInstruction')
+    const qrSection     = document.getElementById('qrSection')
+    const connSection   = document.getElementById('connectedSection')
+    const particles     = document.getElementById('particles')
+
+    // ── Génération des particules ─────────────────
+    for (let i = 0; i < 60; i++) {
+      const p = document.createElement('div')
+      p.classList.add('particle')
+      p.style.left = `${Math.random() * 100}%`
+      p.style.top  = `${Math.random() * 100}%`
+      p.style.animationDelay    = `${Math.random() * 8}s`
+      p.style.animationDuration = `${4 + Math.random() * 8}s`
+      p.style.width = p.style.height = `${2 + Math.random() * 4}px`
+      p.style.opacity = Math.random() * 0.7 + 0.1
+      particles.appendChild(p)
+    }
+
+    // ── QR Code reçu ─────────────────────────────
+    socket.on('qr', (data) => {
+      qrLoading.style.display = 'none'
+      qrImage.src = data
+      qrImage.style.display = 'block'
+      scanInstr.style.display = 'block'
+      statusDot.className = 'status-dot scanning'
+      statusText.textContent = '🔍 Scannez le QR Code avec WhatsApp'
+      qrSection.style.display = 'block'
+      connSection.style.display = 'none'
+
+      // Animation pulse sur le QR
+      qrImage.classList.add('qr-pulse')
+    })
+
+    // ── Connecté ──────────────────────────────────
+    socket.on('connected', (data) => {
+      qrSection.style.display = 'none'
+      connSection.style.display = 'block'
+      connSection.classList.add('fade-in')
+      statusDot.className = 'status-dot connected'
+      statusText.textContent = '✅ Bot connecté et opérationnel'
+      document.getElementById('mainCard').classList.add('connected-card')
+      // Confetti effect
+      launchConfetti()
+    })
+
+    // ── Statut général ────────────────────────────
+    socket.on('status', (data) => {
+      statusText.textContent = data.message
+      if (data.connected) {
+        statusDot.className = 'status-dot connected'
+      } else {
+        statusDot.className = 'status-dot disconnected'
+      }
+    })
+
+    // ── Disconnected ─────────────────────────────
+    socket.on('disconnect', () => {
+      statusDot.className = 'status-dot disconnected'
+      statusText.textContent = '❌ Connexion perdue — Tentative de reconnexion…'
+    })
+
+    // ── Confetti simple ───────────────────────────
+    function launchConfetti() {
+      const colors = ['#00ff88', '#7c3aed', '#ff6b35', '#00d4ff', '#ffd700']
+      for (let i = 0; i < 80; i++) {
+        const c = document.createElement('div')
+        c.classList.add('confetti-piece')
+        c.style.left = `${Math.random() * 100}%`
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
+        c.style.animationDelay = `${Math.random() * 2}s`
+        c.style.animationDuration = `${1.5 + Math.random() * 2}s`
+        c.style.width  = `${4 + Math.random() * 8}px`
+        c.style.height = `${4 + Math.random() * 8}px`
+        document.body.appendChild(c)
+        setTimeout(() => c.remove(), 4000)
+      }
+    }
+
+    // ── Mise à jour du timer en ligne ─────────────
+    let onlineSeconds = 0
+    setInterval(() => {
+      onlineSeconds++
+      const el = document.getElementById('onlineTimer')
+      if (el) {
+        const h = String(Math.floor(onlineSeconds/3600)).padStart(2,'0')
+        const m = String(Math.floor((onlineSeconds%3600)/60)).padStart(2,'0')
+        const s = String(onlineSeconds%60).padStart(2,'0')
+        el.textContent = `${h}:${m}:${s}`
+      }
+    }, 1000)
+  </script>
+</body>
+</html>
