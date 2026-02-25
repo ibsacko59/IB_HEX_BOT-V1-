@@ -1,4 +1,4 @@
-<div align="center">
+<h1 align="center">IB-HEX-BOT-V1</h1>
 
 <img src="https://i.ibb.co/KcM77nr2/1771804016858.png" width="600" style="border-radius:20px"/>
 
@@ -19,7 +19,12 @@
 ---
 
 
+### 🚀 Étape 4 : Méthodes de déploiement
 
+
+#### <img src="https://img.shields.io/badge/Render-12100E?style=for-the-badge&logo=render&logoColor=white" height="28" />
+- Créez un compte : [Lien Render](https://dashboard.render.com/register)
+- Déploiement rapide : [Déployer sur Render](https://dashboard.render.com/web/new)
 
 ## 🛡️ Politique
 
@@ -33,14 +38,16 @@
 
 ## 👨‍💻 Développeur
 
+#IBRAHIMA SORY SACKO
+
 <div align="center">
 
-**🥷 Ibrahima Sory Sacko**
 
+### 🌍 Rejoins la Communauté OVL
 
-
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Contact-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/224621963059)
-
+[![WhatsApp Support](https://img.shields.io/badge/Support%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/BP1oOMh0QvR7H3vvO9bRYK)
+[![Telegram Channel](https://img.shields.io/badge/Canal%20Telegram-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/ovlmd_tlg)
+[![WhatsApp Channel](https://img.shields.io/badge/Channel%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VayTmvxHltYGCm0J7P0A)
 
 
 *Ib-Sacko™ — All rights reserved*
