@@ -2,7 +2,8 @@
 
 <img src="https://i.ibb.co/KcM77nr2/1771804016858.png" width="600" style="border-radius:20px"/>
 
-# 🥷 IB-HEX-BOT
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Orbitron&size=18&duration=4000&pause=1000&color=8B5CF6&center=true&vCenter=true&width=500&lines=Merci+d'utiliser+IB-HEX-BOT+🥷;Fait+avec+❤️+par+Ib-Sacko™;Star+⭐+le+repo+si+tu+aimes+!)
+
 
 **Bot WhatsApp en français • Préfixe `Ib` • Connexion QR Code**
 
