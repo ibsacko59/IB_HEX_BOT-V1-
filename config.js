@@ -21,7 +21,7 @@ module.exports = {
   PORT          : process.env.PORT || 3000,
 
   // ── APIs publiques ────────────────────────
-  GEMINI_KEY    : process.env.GEMINI_KEY    || '',
+  GEMINI_KEY    : process.env.GEMINI_KEY    || 'AIzaSyADiE453lpr3ttv-JF1X_6g8X9O0XAJ2xE',
   OPENAI_KEY    : process.env.OPENAI_KEY    || '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',
 
   // ── Dossier de session ───────────────────
