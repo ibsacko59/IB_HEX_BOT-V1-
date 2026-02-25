@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ib-hex-bot
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_KEY
+        sync: false
+      - key: OPENAI_KEY
+        sync: false
+    healthCheckPath: /
+    autoDeploy: true
