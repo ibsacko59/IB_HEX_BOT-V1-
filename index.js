@@ -10,7 +10,6 @@ const {
   useMultiFileAuthState,
   DisconnectReason,
   fetchLatestBaileysVersion,
-  makeInMemoryStore,
   jidDecode,
   proto,
   getContentType,
@@ -38,11 +37,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'web', 'index.html'))
 })
 
-// ── Store en mémoire ────────────────────────────────────────
-const store = makeInMemoryStore({
-  logger: pino({ level: 'silent' })
-})
-
 // ── Charger toutes les commandes ────────────────────────────
 const commandFiles = fs.readdirSync('./commands').filter(f => f.endsWith('.js'))
 const commands     = {}
@@ -68,17 +62,12 @@ async function startBot() {
     printQRInTerminal: true,
     auth: state,
     browser: ['IB-HEX-BOT', 'Chrome', '1.0'],
-    getMessage: async (key) => {
-      if (store) {
-        const msg = await store.loadMessage(key.remoteJid, key.id)
-        return msg?.message || undefined
-      }
-      return { conversation: 'Bonjour' }
+    getMessage: async () => {
+      return { conversation: 'IB-HEX-BOT' }
     }
   })
 
-  store.bind(sock.ev)
-
+  // ── QR Code ─────────────────────────────────────────────
   sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr } = update
 
@@ -92,11 +81,14 @@ async function startBot() {
     if (connection === 'close') {
       isConnected = false
       io.emit('status', { connected: false, message: '❌ Déconnecté' })
+
       const shouldReconnect =
         (lastDisconnect?.error instanceof Boom)
           ? lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut
           : true
-      console.log('❌ Connexion fermée — raison :', lastDisconnect?.error, '— Reconnexion :', shouldReconnect)
+
+      console.log('❌ Connexion fermée — Reconnexion :', shouldReconnect)
+
       if (shouldReconnect) {
         setTimeout(startBot, 3000)
       } else {
@@ -130,11 +122,54 @@ async function startBot() {
   return sock
 }
 
+// ── Traitement des messages ──────────────────────────────────
+async function handleMessage(sock, msg) {
+  if (!msg.message) return
+  if (msg.key.fromMe) return
+
+  const from     = msg.key.remoteJid
+  const isGroup  = from.endsWith('@g.us')
+  const sender   = isGroup ? msg.key.participant : from
+  const senderNum= sender?.replace(/[^0-9]/g, '')
+  const msgType  = getContentType(msg.message)
+
+  let body = ''
+  if (msgType === 'conversation') body = msg.message.conversation
+  else if (msgType === 'extendedTextMessage') body = msg.message.extendedTextMessage.text
+  else if (msgType === 'imageMessage') body = msg.message.imageMessage.caption || ''
+  else if (msgType === 'videoMessage') body = msg.message.videoMessage.caption || ''
+
+  const PREFIX = config.PREFIX
+  if (!body.toLowerCase().startsWith(PREFIX.toLowerCase())) return
+
+  const withoutPrefix = body.slice(PREFIX.length).trim()
+  const args          = withoutPrefix.split(/ +/)
+  const command       = args.shift().toLowerCase()
+
+  if (commands[command]) {
+    try {
+      await commands[command](sock, msg, from, args)
+    } catch (err) {
+      await sock.sendMessage(from, { text: `❌ Erreur : ${err.message}` }, { quoted: msg })
+    }
+  } else {
+    await sock.sendMessage(from, {
+      text: `❌ Commande introuvable.\nTapez ${PREFIX}allcmds`
+    }, { quoted: msg })
+  }
+}
+
+// ── Socket.IO ───────────────────────────────────────────────
+io.on('connection', (socket) => {
+  if (qrImageData && !isConnected) {
+    socket.emit('qr', qrImageData)
+  } else if (isConnected) {
+    socket.emit('connected', { message: '✅ Bot déjà connecté !' })
+  }
+})
+
 server.listen(config.PORT, () => {
-  console.log(`\n🥷 ═══════════════════════════════════════ 🥷`)
-  console.log(`    IB-HEX-BOT v${config.VERSION} — Ibrahima Sory Sacko`)
-  console.log(`🌐  Interface QR → http://localhost:${config.PORT}`)
-  console.log(`🥷 ═══════════════════════════════════════ 🥷\n`)
+  console.log(`🌐 Interface QR → http://localhost:${config.PORT}`)
 })
 
 startBot().catch(err => {
