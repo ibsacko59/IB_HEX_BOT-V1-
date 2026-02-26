@@ -38,16 +38,29 @@ app.get('/', (req, res) => {
 })
 
 // ── Charger toutes les commandes ────────────────────────────
-const commandFiles = fs.readdirSync('./commands').filter(f => f.endsWith('.js'))
-const commands     = {}
+const commands = {}
+const commandsPath = path.join(__dirname, 'commands')
 
-for (const file of commandFiles) {
-  const cmds = require(`./commands/${file}`)
-  for (const [name, fn] of Object.entries(cmds)) {
-    commands[name.toLowerCase()] = fn
+fs.readdirSync(commandsPath).forEach(file => {
+  if (!file.endsWith('.js')) return
+
+  const commandFile = require(path.join(commandsPath, file))
+
+  // Si le fichier exporte plusieurs commandes (ex: menu.js)
+  if (typeof commandFile === 'object') {
+    Object.keys(commandFile).forEach(cmdName => {
+      commands[cmdName.toLowerCase()] = commandFile[cmdName]
+    })
   }
-}
 
+  // Si le fichier exporte une seule fonction
+  if (typeof commandFile === 'function') {
+    const name = file.replace('.js', '').toLowerCase()
+    commands[name] = commandFile
+  }
+})
+
+console.log(`✅ ${Object.keys(commands).length} commandes chargées`)
 // ── Démarrage du bot ────────────────────────────────────────
 let qrImageData = null
 let isConnected = false
